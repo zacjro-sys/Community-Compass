@@ -81,13 +81,13 @@ This project satisfies all 3 point requirements.
 1. Persistent data storage - SQLite via Flask-SQLAlchemy
 
    - Resource model: app.py
-   - Database is seeded once from resource.csv via seed_from_csv(), and is maintained after restarts in community_compass.db
+   - Database is seeded once from resources.csv via seed_from_csv(), and is maintained after restarts in community_compass.db
 
 2. Meaningful POST usage - POST endpoints trigger real state changes
 
    - /resource/suggest - validates required fields, then writes the new resource to the database.
-   - /admin/resources/<id>/approve - approves the resource and makes it public
-   - /admin/resources/<id>/reject - rejects the resource and does not make it public
+   - /admin/resources/<id<id>>/approve - approves the resource and makes it public
+   - /admin/resources/<id<id>>/reject - rejects the resource and does not make it public
 
 3. Public Hosting
 
