@@ -13,7 +13,6 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{BASE_DIR / 'community_compass.db'}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Only needed so flash() can store a one-time message in the session cookie.
-# Fine for a class project; a real deployment would pull this from an env var.
 app.config['SECRET_KEY'] = 'community-compass-dev-key'
 
 # Password for the /admin moderation queue. Set ADMIN_PASSWORD in your
