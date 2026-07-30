@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row gy-4">
+    <div class="col-12">
+        <div class="hero-card p-5 rounded shadow-sm">
+            <h1 class="display-5 fw-bold mb-3">What do you need help with today?</h1>
+            <p class="lead text-muted">Search local community services for food, shelter, healthcare, legal help, employment, and education.</p>
+            <form action="{{ url_for('list_resources') }}" method="get" class="mt-4">
+                <div class="input-group input-group-lg shadow-sm">
+                    <input type="text" name="q" class="form-control" placeholder="Try 'food' or 'clinic'" aria-label="Search resources">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-12">
+        <h2 class="h4 mb-3">Browse by category</h2>
+        <div class="row g-3">
+            {% for name, icon in categories.items() %}
+                <div class="col-sm-6 col-md-4 col-xl-2">
+                    <a href="{{ url_for('list_resources', category=name) }}" class="category-card d-block rounded shadow-sm text-decoration-none p-4 text-center">
+                        <img src="{{ url_for('static', filename='icons/' ~ icon ~ '.png') }}" alt="{{ name }} icon" class="category-icon mb-2">
+                        <div class="fw-bold">{{ name }}</div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-12">
+        <h2 class="h4 mb-3">Featured resources</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-3">
+            {% for resource in featured %}
+                <div class="col">
+                    <div class="card resource-preview-card shadow-sm h-100">
+                        <div class="card-body">
+                            <a href="{{ url_for('resource_detail', resource_id=resource.id) }}" class="h6 d-block mb-1 text-decoration-none">{{ resource.name }}</a>
+                            <div class="small text-muted mb-2">{{ resource.category }} · {{ resource.city }}, {{ resource.state }}</div>
+                            <p class="small mb-0">{{ resource.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

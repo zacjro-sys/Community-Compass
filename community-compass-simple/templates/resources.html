@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-8">
+        <h2 class="h4 mb-3">Community resources</h2>
+
+        <form method="get" id="searchForm" class="row g-2 align-items-end mb-2">
+            <div class="col-md-5">
+                <label class="form-label visually-hidden" for="searchQuery">Search</label>
+                <input type="text" id="searchQuery" name="q" class="form-control" value="{{ q }}" placeholder="Search by name, description, or city">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label visually-hidden" for="categorySelect">Category</label>
+                <select class="form-select" id="categorySelect" name="category" onchange="this.form.submit()">
+                    <option value="">All categories</option>
+                    {% for name in categories %}
+                        <option value="{{ name }}" {% if name == selected_category %}selected{% endif %}>{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary w-100" type="submit">Search</button>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-outline-primary w-100" type="button" id="useLocationBtn">📍 Near me</button>
+            </div>
+            <input type="hidden" id="latInput" name="lat" value="{{ lat if lat is not none else '' }}">
+            <input type="hidden" id="lonInput" name="lon" value="{{ lon if lon is not none else '' }}">
+        </form>
+
+        {% if sorted_by_distance %}
+            <div class="small text-muted mb-3">
+                Sorted by distance from your location ·
+                <a href="{{ url_for('list_resources', q=q, category=selected_category) }}">clear</a>
+            </div>
+        {% endif %}
+
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body p-0">
+                <div id="resources-map" style="height: 350px;"></div>
+            </div>
+        </div>
+
+        {% if resources %}
+            {% for resource in resources %}
+                <div class="card resource-card shadow-sm mb-3">
+                    <div class="card-body">
+                        <h3 class="h5 mb-1">
+                            <a href="{{ url_for('resource_detail', resource_id=resource.id) }}" class="text-decoration-none d-flex align-items-center gap-2">
+                                <img src="{{ url_for('static', filename='icons/' ~ resource.icon ~ '.png') }}" alt="{{ resource.category }} icon" class="resource-icon">
+                                <span>{{ resource.name }}</span>
+                            </a>
+                        </h3>
+                        <p class="text-muted mb-1">
+                            {{ resource.category }} · {{ resource.city }}, {{ resource.state }}
+                            {% if sorted_by_distance and resource.distance_miles is not none %}
+                                · <span class="fw-semibold">{{ resource.distance_miles }} mi away</span>
+                            {% endif %}
+                        </p>
+                        <p class="mb-1">{{ resource.description }}</p>
+                        <div class="small text-muted">{{ resource.phone or 'No phone listed' }} · {{ resource.hours or 'Hours not listed' }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-info">No resources matched your search.</div>
+        {% endif %}
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Search tips</h5>
+                <ul class="small text-muted mb-0">
+                    <li>Try a category from the dropdown</li>
+                    <li>Search by city name (e.g. "Fairview")</li>
+                    <li>Combine keyword + category for a tighter result</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const mapDataUrl = new URL('{{ url_for('map_data') }}', window.location.origin);
+        mapDataUrl.search = window.location.search;
+        {% if lat is not none and lon is not none %}
+        const userLocation = { lat: {{ lat }}, lon: {{ lon }} };
+        {% else %}
+        const userLocation = null;
+        {% endif %}
+        initMap('resources-map', mapDataUrl.toString(), userLocation);
+
+        const useLocationBtn = document.getElementById('useLocationBtn');
+        useLocationBtn.addEventListener('click', function () {
+            if (!navigator.geolocation) {
+                alert('Geolocation is not supported by your browser.');
+                return;
+            }
+            useLocationBtn.disabled = true;
+            useLocationBtn.textContent = 'Locating…';
+
+            // Belt-and-suspenders reset: on some Windows/browser combos,
+            // getCurrentPosition never calls either callback if the OS-level
+            // location provider stalls (e.g. Location Services is off or slow).
+            // The timeout option below should trigger the error callback at
+            // 10s, but this failsafe guarantees the button always recovers.
+            const failSafe = setTimeout(function () {
+                useLocationBtn.disabled = false;
+                useLocationBtn.textContent = '📍 Near me';
+                alert('Location lookup timed out. Check that Location Services is turned on for your browser (Windows Settings > Privacy & security > Location), then try again.');
+            }, 12000);
+
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    clearTimeout(failSafe);
+                    document.getElementById('latInput').value = position.coords.latitude;
+                    document.getElementById('lonInput').value = position.coords.longitude;
+                    document.getElementById('searchForm').submit();
+                },
+                function (error) {
+                    clearTimeout(failSafe);
+                    useLocationBtn.disabled = false;
+                    useLocationBtn.textContent = '📍 Near me';
+                    const messages = {
+                        1: 'Location permission was denied. Allow location access for this site in your browser settings, then try again.',
+                        2: 'Your location is unavailable right now. Check that Location Services is turned on, then try again.',
+                        3: 'Location lookup timed out. Check that Location Services is turned on, then try again.',
+                    };
+                    alert(messages[error.code] || 'Could not get your location. Check your browser\'s location permissions.');
+                },
+                {
+                    enableHighAccuracy: false,
+                    timeout: 10000,
+                    maximumAge: 60000,
+                }
+            );
+        });
+    });
+</script>
+{% endblock %}
