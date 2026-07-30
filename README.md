@@ -73,3 +73,10 @@ Everything below lives inside `community-compass-simple/`:
 - `templates/` - Jinja templates (`base.html`, `home.html`, `resources.html`, `resource_detail.html`, `suggest_resource.html`, `admin_login.html`, `admin_pending.html`)
 - `static/` - CSS, the Leaflet map JS, and category icons
 - `requirements.txt` - pinned dependencies (Flask, Flask-SQLAlchemy)
+
+## Known Limitations
+
+1. Most data is fictional and is only serving as a placeholder, so it is not a representation of real coverage
+2. All admins share a single password to access the admin panel. It is not possible to distinguish between admins and there is no record of which admin approved/rejected a resource.
+3. There are no validation checks to confirm the format of phone number or website when submitting a new resource.
+4. It is also not possible to make changes to a resource once it has already been submitted. The only way to make changes is to delete the resource and resubmit. 
