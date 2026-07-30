@@ -74,6 +74,15 @@ Everything below lives inside `community-compass-simple/`:
 - `static/` - CSS, the Leaflet map JS, and category icons
 - `requirements.txt` - pinned dependencies (Flask, Flask-SQLAlchemy)
 
+## Point requirements completed
+
+This project satisfies all 3 point requirements.
+
+1. Persistent data storage - SQLite via Flask-SQLAlchemy
+
+   - Resource model: app.py
+   - Database is seeded once from resource.csv via seed_from_csv(), 
+
 ## Known Limitations
 
 1. Most data is fictional and is only serving as a placeholder, so it is not a representation of real coverage
