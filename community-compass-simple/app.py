@@ -21,7 +21,7 @@ ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'password')
 EARTH_RADIUS_MILES = 3958.8
 
 db = SQLAlchemy(app)
-
+# Allows for adding icons instead of just words
 CATEGORIES = {
     'Food': 'food',
     'Shelter': 'shelter',
@@ -30,7 +30,7 @@ CATEGORIES = {
     'Employment': 'employment',
     'Education': 'education'
 }
-
+# Dictionary to have state abbreviations represent each state to give a cleaner look on screen
 US_STATES = {
     'AL': 'Alabama', 'AK': 'Alaska', 'AZ': 'Arizona', 'AR': 'Arkansas',
     'CA': 'California', 'CO': 'Colorado', 'CT': 'Connecticut', 'DE': 'Delaware',
@@ -84,7 +84,7 @@ def ensure_schema():
             conn.execute(text('ALTER TABLE resource ADD COLUMN is_approved BOOLEAN DEFAULT 1'))
             conn.commit()
 
-
+# Used to create database from the csv file
 def seed_from_csv():
     if Resource.query.first():
         return
@@ -144,7 +144,7 @@ def haversine_miles(lat1, lon1, lat2, lon2):
     c = 2 * atan2(sqrt(a), sqrt(1 - a))
     return EARTH_RADIUS_MILES * c
 
-
+# Uses current location and sorts the resources from closest to furthest
 def sort_by_distance(resources, lat, lon):
     """Attach a .distance_miles attribute to each resource and return the
     list sorted nearest-first. Resources without coordinates sort last."""
@@ -253,7 +253,7 @@ def suggest_resource():
         latitude = parse_optional_float(request.form.get('latitude'))
         longitude = parse_optional_float(request.form.get('longitude'))
 
-        errors = []
+        errors = [] # Validation for required fields on submit a resource form
         if not name:
             errors.append('Name is required.')
         if category not in CATEGORIES:
@@ -274,7 +274,8 @@ def suggest_resource():
                 us_states=US_STATES,
                 form=request.form,
             ), 400
-
+            
+         # Validation passed, saving the resource
         resource = Resource(
             name=name,
             category=category,
@@ -339,7 +340,7 @@ def admin_pending():
 
 @app.route('/admin/resources/<int:resource_id>/approve', methods=['POST'])
 @admin_required
-def admin_approve(resource_id):
+def admin_approve(resource_id): # Approving new resource submission
     resource = Resource.query.get_or_404(resource_id)
     resource.is_approved = True
     db.session.commit()
@@ -349,7 +350,7 @@ def admin_approve(resource_id):
 
 @app.route('/admin/resources/<int:resource_id>/reject', methods=['POST'])
 @admin_required
-def admin_reject(resource_id):
+def admin_reject(resource_id): # Rejecting new resource submission
     """Deletes a resource outright. Used both to reject a pending submission
     and to remove an already-published resource (e.g. spam or test entries
     that slipped through approval) from the "Published resources" list."""
