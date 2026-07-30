@@ -2,6 +2,10 @@
 
 Community Compass helps people find nearby community services. Things like food banks, shelters, clinics, legal aid, job help, and education programs.
 
+## Why it is interesting
+
+People experiencing homelessness or financial hardships often need to find resources such as food or healthcare quickly, but information about such resources is often incomplete or just scattered across multiple websites. Community Compass compiles all available information on these resources into a searchable and map-based web app organised by category.
+
 ## What it does right now
 
 You can search resources by keyword. You can filter by category, city, or state. You can see results on an interactive map. You can click into a resource for its full details: address, phone, hours, and website. You can suggest a new resource for review. There's also an admin login at `/admin/login` for approving or rejecting suggested resources.
