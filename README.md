@@ -5,8 +5,8 @@ Community Compass helps people find nearby community services. Things like food 
 ## What it does right now
 
 You can search resources by keyword. You can filter by category, city, or state. You can see results on an interactive map. You can click into a resource for its full details: address, phone, hours, and website. You can suggest a new resource for review. There's also an admin login at `/admin/login` for approving or rejecting suggested resources.
-Most of the data is fictional demo content. A handful of Colorado resources are real organizations. We verified name, address, phone, and website as part of the data pull, but hours and contact details can change. **Do not treat this site as a reliable source for aid.
-**
+Most of the data is fictional demo content. A handful of Colorado resources are real organizations. We verified name, address, phone, and website as part of the data pull, but hours and contact details can change. **Do not treat this site as a reliable source for aid.**
+
 ## Requirements
 
 - Python 3.9 or newer
