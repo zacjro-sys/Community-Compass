@@ -15,8 +15,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Only needed so flash() can store a one-time message in the session cookie.
 app.config['SECRET_KEY'] = 'community-compass-dev-key'
 
-# Password for the /admin moderation queue. Set ADMIN_PASSWORD in your
-# environment for anything beyond local testing.
+# Password for the /admin moderation queue.
 ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'password')
 
 EARTH_RADIUS_MILES = 3958.8
