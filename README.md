@@ -6,7 +6,7 @@ Community Compass helps people find nearby community services. Things like food 
 
 ## Why it is interesting
 
-People experiencing homelessness or financial hardships often need to find resources such as food or healthcare quickly, but information about such resources is often incomplete or just scattered across multiple websites. Community Compass compiles all available information on these resources into a searchable and map-based web app organised by category.
+People experiencing homelessness or financial hardships often need to find resources such as food or healthcare quickly, but information about such resources is often incomplete or just scattered across multiple websites. Community Compass compiles all available information on these resources into a searchable and map-based web app where all resources are organised by category, allowing for easy access.
 
 ## What it does right now
 
