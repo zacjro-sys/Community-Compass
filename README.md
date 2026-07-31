@@ -112,4 +112,5 @@ This project satisfies all 3 point requirements.
 1. Most data is fictional and is only serving as a placeholder, so it is not a representation of real coverage
 2. All admins share a single password to access the admin panel. It is not possible to distinguish between admins and there is no record of which admin approved/rejected a resource.
 3. There are no validation checks to confirm the format of phone number or website when submitting a new resource.
-4. It is also not possible to make changes to a resource once it has already been submitted. The only way to make changes is to delete the resource and resubmit. 
+4. It is also not possible to make changes to a resource once it has already been submitted. The only way to make changes is to delete the resource and resubmit.
+5. Search is a substring match on name, description, and city so it will show no results unless that exact word appears in the listing.
