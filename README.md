@@ -27,12 +27,25 @@ Most of the data is fictional demo content. A handful of Colorado resources are 
 cd community-compass-simple
 ```
 
-2. Create a virtual environment and install dependencies:
+2. Create a virtual environment:
 
 macOS / Linux:
 
 ```bash
 python3 -m venv .venv
+```
+
+Windows (PowerShell):
+
+```powershell
+python -m venv .venv
+```
+
+3. Activate the virtual environment and install dependencies:
+
+macOS / Linux:
+
+```bash
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
@@ -40,14 +53,13 @@ pip install -r requirements.txt
 Windows (PowerShell):
 
 ```powershell
-python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 ```
 
 This installs everything listed in `requirements.txt`: Flask 3.0.3 and Flask-SQLAlchemy 3.1.1.
 
-3. (Optional) Set an admin password for the `/admin` moderation queue. If you skip this, it defaults to `password`.
+4. (Optional) Set an admin password for the `/admin` moderation queue. If you skip this, it defaults to `password`.
 
 macOS / Linux:
 
@@ -61,13 +73,13 @@ Windows (PowerShell):
 $env:ADMIN_PASSWORD = "your-password-here"
 ```
 
-4. Start the app:
+5. Start the app:
 
 ```bash
 python app.py
 ```
 
-5. Open http://127.0.0.1:5000 in your browser.
+6. Open http://127.0.0.1:5000 in your browser.
 
 ## Project layout
 
