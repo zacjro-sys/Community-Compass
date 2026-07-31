@@ -98,8 +98,8 @@ This project satisfies all 3 point requirements.
 2. Meaningful POST usage - POST endpoints trigger real state changes
 
    - /resource/suggest - validates required fields, then writes the new resource to the database.
-   - /admin/resources/<id<id>>/approve - approves the resource and makes it public
-   - /admin/resources/<id<id>>/reject - rejects the resource and does not make it public
+   - /admin/resources/`<id>`/approve - approves the resource and makes it public
+   - /admin/resources/`<id>`/reject - rejects the resource and does not make it public
 <img width="1470" height="834" alt="image" src="https://github.com/user-attachments/assets/a52c327f-0a38-4535-a6c8-2319bb9c4114" />
 
 3. Public Hosting - Community Compass is publicly reachable via Render
