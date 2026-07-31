@@ -82,6 +82,8 @@ Everything below lives inside `community-compass-simple/`:
 
 ## Map-based browsing
 
+On the resources page, a map is displayed with different resources pinned.
+
 <img width="1470" height="834" alt="image" src="https://github.com/user-attachments/assets/98737f52-20c1-462a-9f47-90317eff1284" />
 
 ## Point requirements completed
